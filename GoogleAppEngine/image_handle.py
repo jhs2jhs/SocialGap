@@ -1,21 +1,17 @@
 import cgi
 import webapp2
+import logging
+
+from db_model import Images
+from myutil import debug
 
 from google.appengine.api import users
 from google.appengine.ext import db
 
-class Images(db.Model):
-    author = db.UserProperty(required=True)
-    desc = db.StringProperty(multiline=True, default=None)
-    img = db.BlobProperty()
-    date = db.DateTimeProperty(auto_now_add=True)
-    geo_lat = db.FloatProperty(default=None)
-    geo_lng = db.FloatProperty(default=None)
-
-
 html_image_pick_form = """
 <html>
 <body>
+<div>Welcome, %s <div>
 <form action="/image/upload" enctype="multipart/form-data" method="post">
   <div><label>Description:</label></div>
   <div><textarea name="desc" rows="3" cols="60"></textarea></div>
@@ -28,7 +24,10 @@ html_image_pick_form = """
 """
 class image_pick(webapp2.RequestHandler):
     def get(self):
-        self.response.out.write(html_image_pick_form)
+        user = users.get_current_user()
+        debug(user)
+        debug(user.user_id())
+        self.response.out.write(html_image_pick_form%(user.nickname()))
     
 
 class image_upload(webapp2.RequestHandler):

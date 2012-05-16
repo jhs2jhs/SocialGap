@@ -7,6 +7,7 @@ threadsafe: true
 handlers:
 - url: /image/.*
   script: image_handle.app
+  login: required
 - url: /.*
   script: index.app
 
