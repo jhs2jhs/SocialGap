@@ -3,15 +3,15 @@ import webapp2
 
 from google.appengine.api import users
 
-class MainPage(webapp2.RequestHandler):
-    def get(self):
-        user = users.get_current_user()
+class Images(db.Model):
+    author = db.UserProperty(required=True)
+    desc = db.StringProperty(multiline=True, default=None)
+    img = db.BlobProperty()
+    date = db.DateTimeProperty(auto_now_add=True)
+    geo_lat = db.FloatProperty(default=None)
+    geo_lng = db.FloatProperty(default=None)
+    
 
-        if user:
-            self.response.headers['Content-Type'] = 'text/plain'
-            self.response.out.write('Hello, image:' + user.nickname())
-        else:
-            self.redirect(users.create_login_url(self.request.uri))
 
 
 app = webapp2.WSGIApplication([('/image/', MainPage)],
