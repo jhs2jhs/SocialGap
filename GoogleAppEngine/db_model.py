@@ -1,6 +1,6 @@
 from google.appengine.ext import db
 
-class Images(db.Model):
+class Social_Image(db.Model):
     author = db.UserProperty(required=True)
     desc = db.StringProperty(multiline=True, default=None)
     img = db.BlobProperty()
