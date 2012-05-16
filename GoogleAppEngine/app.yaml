@@ -1,0 +1,12 @@
+application: socialgap
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /image/.*
+  script: image_handle.app
+- url: /.*
+  script: index.app
+
